@@ -6,9 +6,12 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import net.strongdev.generals.managers.Resources;
+import net.strongdev.generals.managers.Scenes;
 
 import org.andengine.engine.camera.BoundCamera;
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
@@ -29,12 +32,12 @@ public class GeneralsActivity extends BaseGameActivity {
 
 
 
-    @Override
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    }
+    }*/
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -58,16 +61,30 @@ public class GeneralsActivity extends BaseGameActivity {
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
         //Resources
-
+        Resources.prepareManager(mEngine, this, camera, boundCamera, getVertexBufferObjectManager());
+        pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
-
+        Resources.getInstance().resourcesPathsInitialize();
+        Scenes.getInstance().createSplashScene(pOnCreateSceneCallback);
     }
 
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
+        mEngine.registerUpdateHandler(new TimerHandler(5, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                Scenes.getInstance().createMenuScene();
+            }
+        }));
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
