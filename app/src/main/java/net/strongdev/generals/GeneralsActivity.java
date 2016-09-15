@@ -80,6 +80,7 @@ public class GeneralsActivity extends BaseGameActivity {
                 Scenes.getInstance().createMenuScene();
             }
         }));
+        pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
 
     @Override

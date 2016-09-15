@@ -11,8 +11,14 @@ import org.andengine.engine.camera.BoundCamera;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.BuildableTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder;
 import org.andengine.opengl.texture.bitmap.BitmapTexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
@@ -33,9 +39,25 @@ public class Resources {
 
     public BitmapTextureAtlas bitmapTextureAtlas;
 
+    public BuildableBitmapTextureAtlas bbta;
+
+    public BitmapTextureAtlas bta;
+
     public BitmapTexture bitmapTexture;
 
     public ITextureRegion textureRegion;
+
+    public ITextureRegion splashScreenRegion;
+
+    //MainMenu
+    public ITextureRegion menuBackgroundRegion;
+    public ITextureRegion menuOverlayRegion;
+    public ITextureRegion menuLogoRegion;
+
+
+    //end MainMenu
+
+
 
     public TiledTextureRegion tiledTextureRegion;
 
@@ -45,12 +67,17 @@ public class Resources {
 
     public Music music;
 
+    public BitmapTextureAtlas controlAtlas;
+
+    public ITextureRegion joyBase, joy;
+
     public static Resources getInstance() {
         return instance;
     }
 
     public void resourcesPathsInitialize() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("graphics/");
+
         FontFactory.setAssetBasePath("fonts/");
         SoundFactory.setAssetBasePath("sound/");
         MusicFactory.setAssetBasePath("music/");
@@ -58,14 +85,39 @@ public class Resources {
 
     public void createSplashResources() {
 
+        bta = new BitmapTextureAtlas(engine.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
+        splashScreenRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bta, generalsActivity,
+                "splash/splash.png",0,0);
+
+
+
+        bta.load();
+
     }
 
     public void destroySplashResources() {
-
+        bta.unload();
+        bta = null;
+        splashScreenRegion = null;
     }
 
     public void createMenuResources() {
 
+        bbta = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 4048, 4048);
+        menuBackgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta, generalsActivity,
+                "mainmenu/background.png");
+        menuOverlayRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta, generalsActivity,
+                "mainmenu/overlay.png");
+        menuLogoRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta, generalsActivity,
+                "mainmenu/logo.png");
+
+        try {
+            bbta.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+        } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            e.printStackTrace();
+        }
+
+        bbta.load();
     }
 
     public void destroyMenuResources() {

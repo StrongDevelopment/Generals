@@ -1,5 +1,6 @@
 package net.strongdev.generals.scenes;
 
+import net.strongdev.generals.managers.Resources;
 import net.strongdev.generals.managers.Scenes;
 
 /**
@@ -13,7 +14,7 @@ public class GameScene extends Base {
 
     @Override
     public void onBackKeyPressed() {
-
+        Scenes.getInstance().createMenuScene();
     }
 
     @Override

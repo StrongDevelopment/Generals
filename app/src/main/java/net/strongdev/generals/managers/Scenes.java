@@ -1,7 +1,11 @@
 package net.strongdev.generals.managers;
 
 import net.strongdev.generals.scenes.Base;
+import net.strongdev.generals.scenes.ChatScene;
+import net.strongdev.generals.scenes.GameScene;
+import net.strongdev.generals.scenes.LoadingScene;
 import net.strongdev.generals.scenes.MenuScene;
+import net.strongdev.generals.scenes.SettingsScene;
 import net.strongdev.generals.scenes.SplashScene;
 
 import org.andengine.engine.Engine;
@@ -85,20 +89,31 @@ public class Scenes {
     }
 
     public void createLoadingScene() {
-
+        Resources.getInstance().createLoadingResources();
+        loadingScene = new LoadingScene();
+        setScene(loadingScene);
     }
 
     public void createSettingsScene() {
-
+        Resources.getInstance().createSettingsResources();
+        settingsScene = new SettingsScene();
+        setScene(settingsScene);
     }
 
 
     public void createGameScene() {
+        if (menuScene != null) {
 
+        }
+        Resources.getInstance().createGameResources();
+        gameScene = new GameScene();
+        setScene(gameScene);
     }
 
     public void createChatScene() {
-
+        Resources.getInstance().createChatResources();
+        chatScene = new ChatScene();
+        setScene(chatScene);
     }
 
 
