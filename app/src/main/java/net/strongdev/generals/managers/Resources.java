@@ -21,6 +21,7 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder;
 import org.andengine.opengl.texture.bitmap.BitmapTexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -53,6 +54,9 @@ public class Resources {
     public ITextureRegion menuBackgroundRegion;
     public ITextureRegion menuOverlayRegion;
     public ITextureRegion menuLogoRegion;
+    public ITiledTextureRegion menuBtnAbout;
+    public ITiledTextureRegion menuBtnExit;
+    public ITiledTextureRegion menuBtnStart;
 
 
     //end MainMenu
@@ -104,12 +108,19 @@ public class Resources {
     public void createMenuResources() {
 
         bbta = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 4048, 4048);
-        menuBackgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta, generalsActivity,
-                "mainmenu/background.png");
-        menuOverlayRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta, generalsActivity,
-                "mainmenu/overlay.png");
-        menuLogoRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta, generalsActivity,
-                "mainmenu/logo.png");
+        menuBackgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta,
+                generalsActivity, "mainmenu/background.png");
+        menuOverlayRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta,
+                generalsActivity, "mainmenu/overlay.png");
+        menuLogoRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bbta,
+                generalsActivity, "mainmenu/logo.png");
+        menuBtnAbout = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(bbta,
+                generalsActivity, "mainmenu/btn-about.png", 3, 1);
+        menuBtnExit = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(bbta,
+                generalsActivity, "mainmenu/btn-exit.png", 3, 1);
+        menuBtnStart = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(bbta,
+                generalsActivity, "mainmenu/btn-start.png", 3, 1);
+
 
         try {
             bbta.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
