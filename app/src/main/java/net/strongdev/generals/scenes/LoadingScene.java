@@ -5,9 +5,9 @@ import net.strongdev.generals.managers.Scenes;
 /**
  * Created by oleg on 14.09.16.
  */
-public class LoadingScene extends Base {
+public class LoadingScene extends Popup {
     @Override
-    public void createScene() {
+    public void createPopup() {
 
     }
 
@@ -17,13 +17,23 @@ public class LoadingScene extends Base {
     }
 
     @Override
-    public Scenes.SceneType getSceneType() {
-        return Scenes.SceneType.SCENE_LOADING;
+    public Scenes.PopupType getPopupType() {
+        return Scenes.PopupType.POPUP_LOADING;
     }
 
     @Override
     public void disposeScene() {
         this.detachSelf();
         this.dispose();
+    }
+
+    @Override
+    public void createResources() {
+
+    }
+
+    @Override
+    public void destroyResources() {
+
     }
 }

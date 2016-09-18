@@ -1,7 +1,5 @@
 package net.strongdev.generals;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
@@ -10,14 +8,11 @@ import net.strongdev.generals.managers.Scenes;
 
 import org.andengine.engine.camera.BoundCamera;
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.handler.timer.ITimerCallback;
-import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.ui.IGameInterface;
 import org.andengine.ui.activity.BaseGameActivity;
 
 public class GeneralsActivity extends BaseGameActivity {
@@ -68,19 +63,25 @@ public class GeneralsActivity extends BaseGameActivity {
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
         Resources.getInstance().resourcesPathsInitialize();
-        Scenes.getInstance().createSplashScene(pOnCreateSceneCallback);
+        pOnCreateSceneCallback.onCreateSceneFinished(
+                Scenes.getInstance().setScene(Scenes.SceneType.SCENE_SPLASH));
     }
 
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
-        mEngine.registerUpdateHandler(new TimerHandler(5, new ITimerCallback() {
+        /*mEngine.registerUpdateHandler(new TimerHandler(5, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                Scenes.getInstance().createMenuScene();
+                Scenes.getInstance().createMainMenuScene();
             }
-        }));
+        }));*/
         pOnPopulateSceneCallback.onPopulateSceneFinished();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Scenes.getInstance().getCurrentScene().onBackKeyPressed();
     }
 
     @Override

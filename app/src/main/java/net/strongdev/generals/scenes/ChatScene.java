@@ -26,4 +26,14 @@ public class ChatScene extends Base {
         this.detachSelf();
         this.dispose();
     }
+
+    @Override
+    public void createResources() {
+
+    }
+
+    @Override
+    public void destroyResources() {
+
+    }
 }

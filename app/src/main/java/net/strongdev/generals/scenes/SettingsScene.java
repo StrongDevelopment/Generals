@@ -14,7 +14,7 @@ public class SettingsScene extends Base {
 
     @Override
     public void onBackKeyPressed() {
-        Scenes.getInstance().createMenuScene();
+        Scenes.getInstance().setScene(Scenes.SceneType.SCENE_MAIN_MENU);
     }
 
     @Override
@@ -26,5 +26,15 @@ public class SettingsScene extends Base {
     public void disposeScene() {
         this.detachSelf();
         this.dispose();
+    }
+
+    @Override
+    public void createResources() {
+
+    }
+
+    @Override
+    public void destroyResources() {
+
     }
 }
